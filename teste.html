@@ -4,187 +4,283 @@
   <meta charset="UTF-8">
   <title>Spotify Home Clone</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #121212;
-      color: #fff;
-      display: flex;
-      height: 100vh;
-    }
-
-    /* Menu lateral */
-    .sidebar {
-      width: 240px;
-      background-color: #040404;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-    }
-    .sidebar h2 {
-      color: green;
-      margin-bottom: 40px;
-      text-align: center;
-    }
-    .sidebar a {
-      color: #b3b3b3;
-      text-decoration: none;
-      margin: 10px 0;
-      font-size: 14px;
-    }
-    .sidebar a:hover {
-      color: #fff;
-    }
-
-    /* Conteúdo principal */
-    .main {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px;
-    }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-    .header h1 {
-      color: #1DB954; /* verde do Spotify */
-    }
-    .profile {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      background-color: #666;
-    }
-
-    /* Seções com cards */
-    .section {
-      margin-bottom: 40px;
-    }
-    .section h2 {
-      font-size: 20px;
-      margin-bottom: 15px;
-    }
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 15px;
-    }
-    .card {
-      background-color: #181818;
-      border-radius: 8px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    .card:hover {
-      background-color: #282828;
-    }
-    .card img {
-      width: 100%;
-      display: block;
-    }
-    .card .info {
-      padding: 10px;
-    }
-    .card .info p {
-      font-size: 14px;
-      color: #b3b3b3;
-    }
-    .card .info h3 {
-      font-size: 16px;
-      margin-bottom: 5px;
-      color: #fff;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial; background-color: #121212; color: #fff; display: flex; justify-content: center; padding: 20px; }
+    .container { width: 100%; max-width: 1200px; }
+    .header { display: flex; justify-content: center; align-items: center; margin-bottom: 20px; position: relative; }
+    .header h1 { color: #1DB954; font-size: 36px; }
+    .profile { width: 35px; height: 35px; border-radius: 50%; background-color: #666; position: absolute; right: 0; }
+    .search-bar { width: 100%; margin-bottom: 30px; display: flex; justify-content: center; }
+    .search-bar input { width: 60%; padding: 10px; border-radius: 20px; border: none; outline: none; font-size: 16px; background-color: #282828; color: #fff; }
+    .section { margin-bottom: 40px; }
+    .section h2 { font-size: 24px; margin-bottom: 15px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; justify-items: center; }
+    .card { background-color: #181818; border-radius: 8px; overflow: hidden; cursor: pointer; transition: background-color 0.2s; width: 200px; text-align: center; position: relative; }
+    .card:hover { background-color: #282828; }
+    .card img { width: 100%; height: 200px; object-fit: cover; }
+    .card .info { padding: 10px; }
+    .card .info p { font-size: 14px; color: #b3b3b3; }
+    .card .info h3 { font-size: 18px; margin-bottom: 5px; color: #fff; }
+    .play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #1DB954; border: none; border-radius: 50%; width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; cursor: pointer; opacity: 0; transition: opacity 0.2s; }
+    .card:hover .play-btn { opacity: 1; }
+    .player { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #181818; display: flex; align-items: center; padding: 10px 20px; gap: 15px; box-shadow: 0 -2px 5px rgba(0,0,0,0.5); }
+    .player audio { width: 100%; }
   </style>
 </head>
 <body>
-
-  <div class="sidebar">
-    <h2>Spotify</h2>
-    <a href="#">Início</a>
-    <a href="#">Buscar</a>
-    <a href="#">Sua Biblioteca</a>
-    <hr style="margin: 20px 0; border-color: #282828;">
-    <a href="#">Criar Playlist</a>
-    <a href="#">Músicas Curtidas</a>
-  </div>
-
-  <div class="main">
+  <div class="container">
     <div class="header">
-      <h1>Boa noite</h1>
+      <h1>Spotify</h1>
       <div class="profile"></div>
     </div>
 
+    <!-- Barra de pesquisa -->
+    <div class="search-bar">
+      <input type="text" id="search" placeholder="Pesquisar música...">
+    </div>
+
+    <!-- Seção 1 -->
     <div class="section">
-      <h2>Seus destaques</h2>
+      <h2>Joji</h2>
       <div class="cards">
-        <div class="card">
-          <img src="https://via.placeholder.com/150" alt="Capa">
+        <div class="card" data-title="Yeah Right" data-artist="Joji">
+          <img src="image/yeah right.jpg" alt="Capa">
           <div class="info">
-            <h3>Playlist 1</h3>
-            <p>Artista / Autor</p>
+            <h3>Yeah Right</h3>
+            <p>Joji</p>
           </div>
+          <audio src="Musicas/Yeah Right.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
         </div>
-        <div class="card">
-          <img src="https://via.placeholder.com/150" alt="Capa">
+        <div class="card" data-title="Slow Dancing" data-artist="Joji">
+          <img src="image/slow dancing.jpg" alt="Capa">
           <div class="info">
-            <h3>Playlist 2</h3>
-            <p>Artista / Autor</p>
+            <h3>Slow Dancing</h3>
+            <p>Joji</p>
           </div>
+          <audio src="Musicas/slow dancing.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
         </div>
-        <div class="card">
-          <img src="https://via.placeholder.com/150" alt="Capa">
+        <div class="card" data-title="Sanctuary" data-artist="Joji">
+          <img src="image/sanctuary.jpg" alt="Capa">
           <div class="info">
-            <h3>Playlist 3</h3>
-            <p>Artista / Autor</p>
+            <h3>Sanctuary</h3>
+            <p>Joji</p>
           </div>
+          <audio src="Musicas/santuary.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
         </div>
-        <div class="card">
-          <img src="https://via.placeholder.com/150" alt="Capa">
+        <div class="card" data-title="Run" data-artist="Joji">
+          <img src="image/run.jpg" alt="Capa">
           <div class="info">
-            <h3>Playlist 4</h3>
-            <p>Artista / Autor</p>
+            <h3>Run</h3>
+            <p>Joji</p>
           </div>
+          <audio src="Musicas/Run.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
         </div>
       </div>
     </div>
 
+    <!-- Seção 2 -->
     <div class="section">
-      <h2>Feito para você</h2>
+      <h2>Lana Del Rey</h2>
       <div class="cards">
-        <div class="card">
-          <img src="https://via.placeholder.com/150" alt="Capa">
+        <div class="card" data-title="Sad Girl" data-artist="Lana Del Rey">
+          <img src="image/lana del rey.jpg" alt="Capa">
           <div class="info">
-            <h3>Mix diário</h3>
-            <p>Spotify ou Artista</p>
+            <h3>Sad Girl</h3>
+            <p>Lana Del Rey</p>
           </div>
+          <audio src="Musicas/sad girl.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
         </div>
-        <div class="card">
-          <img src="https://via.placeholder.com/150" alt="Capa">
+        <div class="card" data-title="Young and Beautiful" data-artist="Lana Del Rey">
+          <img src="image/young.jpg" alt="Capa">
           <div class="info">
-            <h3>Descobertas da semana</h3>
-            <p>Spotify</p>
+            <h3>Young and Beautiful</h3>
+            <p>Lana Del Rey</p>
           </div>
+          <audio src="Musicas/young and beautiful.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
         </div>
-        <div class="card">
-          <img src="https://via.placeholder.com/150" alt="Capa">
+        <div class="card" data-title="Summertime Sadness" data-artist="Lana Del Rey">
+          <img src="image/sadness.jpg" alt="Capa">
           <div class="info">
-            <h3>Top Brasil</h3>
-            <p>Spotify</p>
+            <h3>Summertime Sadness</h3>
+            <p>Lana Del Rey</p>
           </div>
+          <audio src="Musicas/summertime sadness.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
+        </div>
+        <div class="card" data-title="Born to Die" data-artist="Lana Del Rey">
+          <img src="image/born to die.jpg" alt="Capa">
+          <div class="info">
+            <h3>Born to Die</h3>
+            <p>Lana Del Rey</p>
+          </div>
+          <audio src="Musicas/born to die.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
         </div>
       </div>
     </div>
 
-    <!-- Você pode adicionar mais seções similares -->
+    <!-- Seção 3 -->
+    <div class="section">
+      <h2>Brent Faiyaz</h2>
+      <div class="cards">
+        <div class="card" data-title="L.A" data-artist="BrentFaiyaz">
+          <img src="image/L.A" alt="Capa">
+          <div class="info">
+            <h3>L.A</h3>
+            <p>Brent Faiyaz</p>
+          </div>
+          <audio src="Musicas/L.A.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
+        </div>
+        <div class="card" data-title="All Mine" data-artist="BrentFaiyaz">
+          <img src="image/all mine.jpg" alt="Capa">
+          <div class="info">
+            <h3>All Mine</h3>
+            <p>Brent Faiyaz</p>
+          </div>
+          <audio src="Musicas/all mine.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
+        </div>
+        <div class="card" data-title="Lovely" data-artist="BrentFaiyaz">
+          <img src="image/lovely.jpg" alt="Capa">
+          <div class="info">
+            <h3>Lovely</h3>
+            <p>Brent Faiyaz</p>
+          </div>
+          <audio src="Musicas/Lovely.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
+        </div>
+        <div class="card" data-title="Stay Down" data-artist="BrentFaiyaz">
+          <img src="image/L.A" alt="Capa">
+          <div class="info">
+            <h3>Stay Down</h3>
+            <p>Brent Faiyaz</p>
+          </div>
+          <audio src="Musicas/stay down.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção 4 -->
+    <div class="section">
+      <h2>Jacques</h2>
+      <div class="cards">
+        <div class="card" data-title="You" data-artist="Jacquees">
+          <img src="image/you.jpg" alt="Capa">
+          <div class="info">
+            <h3>You</h3>
+            <p>Jacquees</p>
+          </div>
+          <audio src="Musicas/you.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
+        </div>
+        <div class="card" data-title="Who's" data-artist="Jacquees">
+          <img src="image/whos.jpg" alt="Capa">
+          <div class="info">
+            <h3>Who's</h3>
+            <p>Jacquees</p>
+          </div>
+          <audio src="Musicas/whos.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
+        </div>
+        <div class="card" data-title="Tispy" data-artist="Jacquees">
+          <img src="image/tispy.jpg" alt="Capa">
+          <div class="info">
+            <h3>Tispy</h3>
+            <p>Jacquees</p>
+          </div>
+          <audio src="Musicas/tispy.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
+        </div>
+        <div class="card" data-title="B.E.D" data-artist="Jacquees">
+          <img src="image/bed.jpg" alt="Capa">
+          <div class="info">
+            <h3>B.E.D</h3>
+            <p>Jacquees</p>
+          </div>
+          <audio src="Musicas/bed.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção 5 -->
+    <div class="section">
+      <h2>The Neighbourhood</h2>
+      <div class="cards">
+        <div class="card" data-title="Reflections" data-artist="The Neighbourhood">
+          <img src="image/reflections.jpg" alt="Capa">
+          <div class="info">
+            <h3>Reflections</h3>
+            <p>The Neighbourhood</p>
+          </div>
+          <audio src="Musicas/refletions.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
+        </div>
+        <div class="card" data-title="LoveBomb" data-artist="The Neighbourhood">
+          <img src="image/bomblove.jpg" alt="Capa">
+          <div class="info">
+            <h3>LoveBomb</h3>
+            <p>The Neighbourhood</p>
+          </div>
+          <audio src="Musicas/lovebomb.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
+        </div>
+        <div class="card" data-title="Daddy Issues" data-artist="The Neighbourhood">
+          <img src="image/daddy issues.png" alt="Capa">
+          <div class="info">
+            <h3>Daddy Issues</h3>
+            <p>The Neighbourhood</p>
+          </div>
+          <audio src="Musicas/daddy issues.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
+        </div>
+        <div class="card" data-title="Cherry Flavoured" data-artist="The Neighbourhood">
+          <img src="image/cherry.jpg" alt="Capa">
+          <div class="info">
+            <h3>Cherry Flavoured</h3>
+            <p>The Neighbourhood</p>
+          </div>
+          <audio src="Musicas/cherry flavoured.mp3"></audio>
+          <button class="play-btn" onclick="playMusic(this)">▶</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Player fixo -->
+    <div class="player">
+      <audio id="player" controls></audio>
+    </div>
 
   </div>
 
+  <script>
+    const searchInput = document.getElementById('search');
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        const title = card.dataset.title.toLowerCase();
+        const artist = card.dataset.artist.toLowerCase();
+        card.style.display = (title.includes(query) || artist.includes(query)) ? '' : 'none';
+      });
+    });
+
+    function playMusic(btn) {
+      const card = btn.closest('.card');
+      const audioSrc = card.querySelector('audio').src;
+      const player = document.getElementById('player');
+      player.src = audioSrc;
+      player.play();
+    }
+  </script>
 </body>
 </html>
